@@ -9,41 +9,43 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { UiButton } from "@/shared/ui/ui-button";
 import { UiTextField } from "@/shared/ui/ui-text-field";
-
-const geistSans = localFont({
-  src: "../../pages/fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "../../pages/fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { UiSelectField } from "@/shared/ui/ui-select-field";
+import { UiLink } from "@/shared/ui/ui-link";
+import { UiSpinner } from "@/shared/ui/ui-spinner";
+import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
+import { UiHeader } from "@/shared/ui/ui-header";
 
 export default function HomePage() {
-  const {data} = useQuery({
-    queryKey: ['session'],
+  const { data } = useQuery({
+    queryKey: ["session"],
     queryFn: () => authControllerGetSessionInfo(),
   });
 
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-       {data?.email}
+    <div>
+      <main>
+        <UiHeader right={<div>{data?.email}</div>} />
+        <UiButton variant="primary">Hey</UiButton>
+        <UiButton variant="secondary">Hey</UiButton>
+        <UiButton variant="outlined">Hey</UiButton>
+        <UiButton disabled variant="primary">
+          Hey
+        </UiButton>
 
-       <UiButton variant="primary">Hey</UiButton>
-       <UiButton variant="secondary">Hey</UiButton>
-       <UiButton variant="outlined">Hey</UiButton>
-       <UiButton disabled variant="primary">Hey</UiButton>
-
-       <UiTextField label="Text field" inputProps={{placeholder: 'Enter email...'}}/>
-       <UiTextField error="Text field" inputProps={{placeholder: 'Enter email...'}}/>
-       <UiTextField  inputProps={{placeholder: 'Enter email...'}}/>
+        <UiTextField
+          label="Text field"
+          inputProps={{ placeholder: "Enter email..." }}
+        />
+        <UiTextField
+          error="Text field"
+          inputProps={{ placeholder: "Enter email..." }}
+        />
+        <UiTextField inputProps={{ placeholder: "Enter email..." }} />
+        <UiSelectField options={[{ value: "1", label: "option" }]} />
+        <UiLink href={"/"}>Text</UiLink>
+        <UiSpinner className={"text-teal-600 w-20 h-20"} />
+        {/* <UiPageSpinner /> */}
       </main>
-      
     </div>
   );
 }
